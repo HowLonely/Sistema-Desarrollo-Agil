@@ -11,4 +11,3 @@ root.resizable(False, False)
 
 app = FrameCalculoIMC(root)
 app.mainloop()
-

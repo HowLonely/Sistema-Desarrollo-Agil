@@ -25,6 +25,8 @@ class TopLevelReport(Toplevel):
         self.age = self.objReg.calcular_edad()
         self.genre = self.objReg.get_genre()
 
+        self.diff = round(float(self.imc) - float(self.info_imc[0]), 2)
+
         self.setFrameFont()
         self.widgets()
 
@@ -62,10 +64,6 @@ class TopLevelReport(Toplevel):
         Label(self.frameReport, text=self.grade + " " + self.section, bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 10, font.BOLD)).grid(row=4, column=0, sticky='w', columnspan=4)
 
-        Label(self.frameReport, text='IMC:', bg='#113f67', fg='#a2a8d3',
-              font=("Segoe UI", 9, font.NORMAL)).grid(row=6, column=0, sticky='e')
-        Label(self.frameReport, text=self.info_imc[0], bg='#113f67', fg='#a2a8d3').grid(row=6, column=1, sticky='w')
-
         Label(self.frameReport, text='Rango IMC:', bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 9)).grid(row=5, column=0, sticky='e')
         Label(self.frameReport, text=self.info_imc[1], bg='#113f67', fg='#a2a8d3').grid(row=5, column=1, sticky='w')
@@ -73,4 +71,16 @@ class TopLevelReport(Toplevel):
         Label(self.frameReport, text='Alumnos:', bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 9, font.NORMAL)).grid(row=5, column=2, sticky='e')
         Label(self.frameReport, text=self.cant_alumnos, bg='#113f67', fg='#a2a8d3').grid(row=5, column=3, sticky='w')
+
+        Label(self.frameReport, text='IMC:', bg='#113f67', fg='#a2a8d3',
+              font=("Segoe UI", 9, font.NORMAL)).grid(row=6, column=0, sticky='e')
+        Label(self.frameReport, text=self.info_imc[0], bg='#113f67', fg='#a2a8d3').grid(row=6, column=1, sticky='w')
+
+        Label(self.frameReport, text='Diferencia IMC Alumno/Curso:', bg='#113f67', fg='#a2a8d3',
+              font=("Segoe UI", 10, font.BOLD)).grid(row=7, column=0, columnspan=4, sticky='w')
+
+        Label(self.frameReport, text=self.diff, bg='#113f67', fg='#a2a8d3', pady=10).grid(row=7, column=3, sticky='w')
+
+        Button(self.frameReport, text='Volver', width=10, bg='#113f67', fg='#a2a8d3', pady=-5).grid(row=8, column=0, columnspan=6)
+
 
