@@ -18,12 +18,12 @@ class FrameCalculoIMC(Frame):
         self.imc = None
         self.rango_imc = None
         self.master = master
+        self.setFrameFont()
         self.pack()
         self.objCalculoIMC = CalculoIMC()
-        self.setFrameFont()
         self.widgets()
 
-    def fnCalcular(self):
+    def fnCalculate(self):
         if self.fieldPeso.get() != '' or self.fieldAltura.get() != '':
             w = self.fieldPeso.get()
             h = self.fieldAltura.get()
@@ -99,7 +99,7 @@ class FrameCalculoIMC(Frame):
     def setFrameFont(self):
         self.defaultFont = font.nametofont("TkDefaultFont", self.master)
         self.defaultFont.config(family="Segoe UI",
-                                size=10,
+                                size=9,
                                 weight=font.NORMAL)
 
     def widgets(self):
@@ -107,7 +107,7 @@ class FrameCalculoIMC(Frame):
         self.lblTittle = Label(self, text='Sistema IMC', fg='#a2a8d3', bg='#113f67')
         self.lblTittle.grid(row=0, column=0, columnspan=10, pady=5)
 
-        self.mainFrame = LabelFrame(self, text='Registro alumno', bg='#113f67', fg='#a2a8d3', padx=5, pady=5)
+        self.mainFrame = LabelFrame(self, text='Registro alumno', bg='#113f67', fg='#a2a8d3', padx=5)
         self.mainFrame.grid(row=1, column=0, sticky='w')
 
         Label(self.mainFrame, text='Curso: ', bg='#113f67', pady=5, padx=5, fg='#a2a8d3').grid(row=0, column=0,
@@ -122,7 +122,7 @@ class FrameCalculoIMC(Frame):
 
         Label(self.mainFrame, text='Nombre: ', bg='#113f67', fg='#a2a8d3').grid(row=1, column=0, sticky='w')
         self.boxNombre = Combobox(self.mainFrame, width=47, state='readonly')
-        self.boxNombre.grid(row=1, column=1, sticky='w')
+        self.boxNombre.grid(row=1, column=1, sticky='w', pady=5)
         self.boxNombre.bind('<<ComboboxSelected>>', self.unlock_imc_section)
 
         self.imcFrame = LabelFrame(self, text='Calculo IMC', bg='#113f67', fg='#a2a8d3', padx=5, pady=5)
@@ -153,7 +153,7 @@ class FrameCalculoIMC(Frame):
                command=self.fnRegistrar).grid(row=3, column=1, pady=5, sticky='e')
 
         Button(self.imcFrame, text='Calcular', width=8, bg='#113f67', fg='#a2a8d3',
-               command=self.fnCalcular).grid(row=3, column=3, pady=5, sticky='w', columnspan=2)
+               command=self.fnCalculate).grid(row=3, column=3, pady=5, sticky='w', columnspan=2)
 
         Button(self.imcFrame, text='Salir', width=8, bg='#113f67', fg='#a2a8d3',
                command=self.master.destroy).grid(row=3, column=4, pady=10, sticky='e', columnspan=4)

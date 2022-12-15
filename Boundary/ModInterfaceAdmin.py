@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import font
+from tkinter import font, messagebox
 from tkinter.ttk import Combobox
 
 from Control import Others
@@ -34,7 +34,12 @@ class FrameReportAdmin(Frame):
         self.studentSelected = (self.boxNombre.get()).split()[0]
 
     def generateReport(self):
-        self.report_wind = TopLevelReport(self, self.studentSelected, self.id_grade)
+        if len(self.boxCurso.get()) == 0 and len(self.boxNombre.get()) == 0:
+            messagebox.showerror(title='Error selección', message='Seleccione un Estudiante para emitir reporte')
+        elif len(self.boxReport.get()) == 0:
+            messagebox.showerror(title='Error selección', message='Seleccione un tipo de reporte a emitir')
+        elif self.boxReport.get() == 'Comparado con promedio del curso':
+            self.report_wind = TopLevelReport(self, self.studentSelected, self.id_grade)
 
     def widgets(self):
         Label(self, text='Emitir reporte de estudiante', fg='#a2a8d3', bg='#113f67',

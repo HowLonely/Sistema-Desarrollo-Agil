@@ -14,7 +14,7 @@ class TopLevelReport(Toplevel):
 
         self.objReg = Reporte(self.rut, self.id_grade)
 
-        self.info_imc = self.objReg.calcular_prom_imc() #Collection
+        self.info_imc = self.objReg.calcular_prom_imc()  # Collection
         self.grade = CursoCRUD.mostrar_x_id(id_grade)[1].capitalize()
         self.section = CursoCRUD.mostrar_x_id(id_grade)[2].capitalize()
         self.cant_alumnos = EstudianteCRUD.mostrar_cant_alumnos(self.id_grade)[0]
@@ -25,10 +25,17 @@ class TopLevelReport(Toplevel):
         self.age = self.objReg.calcular_edad()
         self.genre = self.objReg.get_genre()
 
-        self.diff = round(float(self.imc) - float(self.info_imc[0]), 2)
+        self.diff = round((float(self.imc) - float(self.info_imc[0])) * 100 / float(self.imc), 2)
+        self.setDiff()
 
         self.setFrameFont()
         self.widgets()
+
+    def setDiff(self):
+        if float(self.diff) > 0:
+            self.diff = f'+{self.diff}'
+        else:
+            self.diff = f'{self.diff}'
 
     def setFrameFont(self):
         self.defaultFont = font.nametofont("TkDefaultFont", self.master)
@@ -39,8 +46,9 @@ class TopLevelReport(Toplevel):
     def widgets(self):
         Label(self, text='Reporte estudiante \n comparado promedio del curso', bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 12, font.BOLD)).grid(row=0, column=0)
-        self.frameReport = LabelFrame(self, text='Reporte Estudiante/Curso', bg='#113f67', fg='#a2a8d3', padx=15, pady=10)
-        self.frameReport.grid(row=1, column=0)
+        self.frameReport = LabelFrame(self, text='Reporte Estudiante/Curso', bg='#113f67', fg='#a2a8d3', padx=15,
+                                      pady=5)
+        self.frameReport.grid(row=1, column=0, pady=5)
 
         Label(self.frameReport, text=self.name, bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 10, font.BOLD)).grid(row=0, column=0, sticky='w', columnspan=4)
@@ -79,8 +87,8 @@ class TopLevelReport(Toplevel):
         Label(self.frameReport, text='Diferencia IMC Alumno/Curso:', bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 10, font.BOLD)).grid(row=7, column=0, columnspan=4, sticky='w')
 
-        Label(self.frameReport, text=self.diff, bg='#113f67', fg='#a2a8d3', pady=10).grid(row=7, column=3, sticky='w')
+        Label(self.frameReport, text=str(self.diff) + ' %', bg='#113f67', fg='#a2a8d3', pady=10)\
+            .grid(row=7, column=3, sticky='w')
 
-        Button(self.frameReport, text='Volver', width=10, bg='#113f67', fg='#a2a8d3', pady=-5).grid(row=8, column=0, columnspan=6)
-
-
+        Button(self.frameReport, text='Volver', width=10, bg='#113f67', fg='#a2a8d3', pady=-5,
+               command=self.destroy).grid(row=8, column=0, columnspan=6, pady=2)
