@@ -43,6 +43,11 @@ class TopLevelReport(Toplevel):
                                 size=9,
                                 slant=font.ITALIC)
 
+    def reportDownload(self):
+        self.objReg.writeOnText(self.name, self.age, self.genre,
+                                    self.rango_imc, self.imc, self.grade,
+                                    self.info_imc[1], self.info_imc[0], self.cant_alumnos, self.diff)
+
     def widgets(self):
         Label(self, text='Reporte estudiante \n comparado promedio del curso', bg='#113f67', fg='#a2a8d3',
               font=("Segoe UI", 12, font.BOLD)).grid(row=0, column=0)
@@ -91,4 +96,7 @@ class TopLevelReport(Toplevel):
             .grid(row=7, column=3, sticky='w')
 
         Button(self.frameReport, text='Volver', width=10, bg='#113f67', fg='#a2a8d3', pady=-5,
-               command=self.destroy).grid(row=8, column=0, columnspan=6, pady=2)
+               command=self.destroy).grid(row=8, column=1, columnspan=6, pady=2, sticky='e')
+
+        Button(self.frameReport, text='Descargar reporte', width=15, bg='#113f67', fg='#a2a8d3', pady=-5,
+               command=self.reportDownload).grid(row=8, column=0, columnspan=6, pady=2, sticky='w')

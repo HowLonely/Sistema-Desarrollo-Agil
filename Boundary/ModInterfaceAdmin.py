@@ -3,7 +3,7 @@ from tkinter import font, messagebox
 from tkinter.ttk import Combobox
 
 from Control import Others
-from Entity.DAO import EstudianteCRUD
+from Entity.DAO import EstudianteCRUD, RegistroCRUD
 from Boundary.ModInterfaceReport import TopLevelReport
 
 
@@ -38,15 +38,21 @@ class FrameReportAdmin(Frame):
             messagebox.showerror(title='Error selección', message='Seleccione un Estudiante para emitir reporte')
         elif len(self.boxReport.get()) == 0:
             messagebox.showerror(title='Error selección', message='Seleccione un tipo de reporte a emitir')
+        elif RegistroCRUD.mostrar_ultimo_registro(self.studentSelected) is None:
+            messagebox.showerror(title='Error registros', message='No existen suficientes registros del estudiante')
+        #Reports
         elif self.boxReport.get() == 'Comparado con promedio del curso':
             self.report_wind = TopLevelReport(self, self.studentSelected, self.id_grade)
 
+
     def widgets(self):
+        Label(self, text='Sistema IMC', fg='#a2a8d3', bg='#113f67',
+              font=("Segoe UI", 12, font.BOLD)).grid(row=0, column=0, columnspan=10, padx=5)
         Label(self, text='Emitir reporte de estudiante', fg='#a2a8d3', bg='#113f67',
-              font=("Segoe UI", 12, font.BOLD)).grid(row=0, column=0, columnspan=10, pady=5, padx=5)
+              font=("Segoe UI", 12, font.BOLD)).grid(row=1, column=0, columnspan=10, pady=5, padx=5,sticky='w')
 
         self.main_frame = LabelFrame(self, text='Selección de emisión', fg='#a2a8d3', bg='#113f67', pady=5, padx=5)
-        self.main_frame.grid(row=1, column=0)
+        self.main_frame.grid(row=2, column=0)
 
         Label(self.main_frame, text='Seleccionar curso: ', fg='#a2a8d3', bg='#113f67').grid(row=0, column=0, sticky='e')
         self.boxCurso = Combobox(self.main_frame, width=20, state='readonly',

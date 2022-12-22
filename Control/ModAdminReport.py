@@ -17,17 +17,17 @@ class Reporte:
         return self.age
 
     def calcular_prom_imc(self):
-        #collections
+        # collections
         std_grade = EstudianteCRUD.mostrar_x_index(self.id_curso)
         sum_imc = 0
         total_registros = 0
         for std in std_grade:
-            registers = RegistroCRUD.mostrar_ultimo_registro(std[0]) #Collection
+            registers = RegistroCRUD.mostrar_ultimo_registro(std[0])  # Collection
             if registers is not None:
                 total_registros += 1
                 sum_imc += float(registers[1])
 
-        prom_imc = round(sum_imc/total_registros, 2)
+        prom_imc = round(sum_imc / total_registros, 2)
         range_imc = ''
 
         if prom_imc > 10:
@@ -48,3 +48,27 @@ class Reporte:
         elif self.genre == 'm':
             return 'Masculino'
 
+    def writeOnText(self, full_name, age, genre, range_std, imc_std, grade, range_grade, imc_grade, total_grade,
+                    porc_diff):
+        text = f'\nEstudiante: {full_name}' \
+               f'\n' \
+               f'\n Edad: {age}' \
+               f'\n Género: {genre}' \
+               f'\n Rango IMC: {range_std}' \
+               f'\n IMC: {imc_std}' \
+               '\n' \
+               f'\nCurso: {grade}' \
+               '\n' \
+               f'\n Rango IMC Curso: {range_grade}' \
+               f'\n IMC Curso: {imc_grade}' \
+               f'\n Total alumnos: {total_grade}' \
+               f'\n' \
+               f'\nPorcentaje diferencia: {porc_diff} %'
+
+        file = open(
+            f'{full_name.split()[2].lower()}.{full_name.split()[3].lower()}.{full_name.split()[0].lower()}.comparadocurso.txt',
+            'w')
+
+        file.write(text)
+
+        file.close()
